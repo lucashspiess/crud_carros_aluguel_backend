@@ -1,0 +1,16 @@
+br\ueg\prog\webi\faculdade\crud\controller\CarroController.class
+br\ueg\prog\webi\faculdade\crud\configuration\WebConfig.class
+br\ueg\prog\webi\faculdade\crud\dto\CarroDTO.class
+br\ueg\prog\webi\api\config\ApiWebConfig.class
+br\ueg\prog\webi\faculdade\crud\mapper\CarroMapper.class
+br\ueg\prog\webi\faculdade\crud\dto\CarroListaDTO.class
+br\ueg\prog\webi\faculdade\crud\service\impl\CarroServiceImpl.class
+br\ueg\prog\webi\faculdade\crud\service\CarroService.class
+br\ueg\prog\webi\faculdade\crud\model\Carro.class
+br\ueg\prog\webi\faculdade\crud\dto\CarroIncluirDTO.class
+br\ueg\prog\webi\api\config\ApiSwaggerConfig.class
+br\ueg\prog\webi\faculdade\crud\repository\CarroRepository.class
+br\ueg\prog\webi\faculdade\crud\utils\ValidacoesComuns.class
+br\ueg\prog\webi\faculdade\crud\mapper\CarroMapperImpl.class
+br\ueg\prog\webi\faculdade\crud\configuration\SwaggerConfig.class
+br\ueg\prog\webi\faculdade\crud\Application.class
