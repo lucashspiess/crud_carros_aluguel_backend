@@ -89,6 +89,7 @@ public class CarroServiceImpl implements CarroService {
 
         Carro save = carroRepository.save(carro);
 
+        System.out.println("teste");
         return save;
     }
 
