@@ -7,8 +7,8 @@ import java.util.List;
 public interface CarroService {
     public Carro incluir (Carro carro);
     public Carro alterar (Carro carro, String placa);
-    public void excluir(String id);
-
+    public Carro excluir(String placa);
     public Carro obterCarroPelaPlaca(String placa);
     public List<Carro> listarTodos();
+    public Carro alugar(String placa);
 }

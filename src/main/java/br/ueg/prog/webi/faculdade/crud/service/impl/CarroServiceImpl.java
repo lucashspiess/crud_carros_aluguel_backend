@@ -89,7 +89,6 @@ public class CarroServiceImpl implements CarroService {
 
         Carro save = carroRepository.save(carro);
 
-        System.out.println("teste");
         return save;
     }
 
@@ -98,23 +97,42 @@ public class CarroServiceImpl implements CarroService {
                 .findByPlaca(placa)
                 .orElseThrow(
                         () -> new IllegalArgumentException(
-                                "Erro ao localizarr carro para alteração"
+                                "Erro ao localizarr carro"
                         )
                 );
     }
 
+    private boolean verificaStatus(Carro carro){
+        if(carro.getStatus().equals("Disponível")){
+            return true;
+        }
+        return false;
+    }
     @Override
-    public void excluir(String id) {
-
+    public Carro excluir(String placa) {
+        Carro carroExcluir = this.recuperarCarroOuGeraErro(placa);
+        if(!verificaStatus(carroExcluir)){
+            throw new IllegalArgumentException("Não é possível remover o carro, pois está alugado");
+        }
+        this.carroRepository.delete(carroExcluir);
+        return carroExcluir;
     }
 
     @Override
     public Carro obterCarroPelaPlaca(String placa) {
-        return null;
+        return this.recuperarCarroOuGeraErro(placa);
     }
 
     @Override
     public List<Carro> listarTodos() {
         return carroRepository.findAll();
+    }
+
+    @Override
+    public Carro alugar(String placa) {
+        Carro carro = this.recuperarCarroOuGeraErro(placa);
+        carro.setStatus("Alugado");
+        Carro save = this.carroRepository.save(carro);
+        return save;
     }
 }

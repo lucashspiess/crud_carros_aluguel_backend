@@ -46,4 +46,25 @@ public class  CarroController {
         Carro alterar = service.alterar(pCarro, placa);
         return mapper.toCarroDTO(alterar);
     }
+
+    @DeleteMapping(path = "/{placa}")
+    @Operation(description = "Método para remover um carro pela placa")
+    public CarroDTO remover(@PathVariable(name = "placa")String placa){
+        Carro carroExcluido = this.service.excluir(placa);
+        return mapper.toCarroDTO(carroExcluido);
+    }
+
+    @GetMapping(path = "/{placa}")
+    @Operation(description = "Método para retornar um carro pela placa")
+    public CarroDTO obterPorPlaca(@PathVariable(name = "placa")String placa){
+        Carro carro = this.service.obterCarroPelaPlaca(placa);
+        return this.mapper.toCarroDTO(carro);
+    }
+
+    @PatchMapping(path = "/{placa}/alugar-carro")
+    @Operation(description = "Método para mudar o status do carro para alugado")
+    public CarroDTO alugar(@PathVariable(name = "placa")String placa){
+        Carro carro = this.service.alugar(placa);
+        return this.mapper.toCarroDTO(carro);
+    }
 }
