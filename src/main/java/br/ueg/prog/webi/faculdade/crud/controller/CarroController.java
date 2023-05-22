@@ -7,7 +7,13 @@ import br.ueg.prog.webi.faculdade.crud.mapper.CarroMapper;
 import br.ueg.prog.webi.faculdade.crud.model.Carro;
 import br.ueg.prog.webi.faculdade.crud.service.CarroService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +29,17 @@ public class  CarroController {
     private CarroService service;
 
     @GetMapping(path="/listar")
-    @Operation(description = "Listagem geral de carros")
+    @Operation(description = "Listagem Geral", responses = {
+            @ApiResponse(responseCode = "200", description = "Listagem geral",
+                    content = @Content(
+                            mediaType = "application/json",
+                            array = @ArraySchema())),
+            @ApiResponse(responseCode = "404", description = "Registro náo encontrado",
+                    content = @Content(mediaType = "application/json"))
+    })
     public List<CarroListaDTO> listAll(){
         List<Carro> carros = service.listarTodos();
+        System.out.print(carros);
         return mapper.toDTO(carros);
     }
 
@@ -48,10 +62,11 @@ public class  CarroController {
     }
 
     @DeleteMapping(path = "/{placa}")
-    @Operation(description = "Método para remover um carro pela placa")
-    public CarroDTO remover(@PathVariable(name = "placa")String placa){
+    @Operation(description = "Método utilizado para remover uma entidiade pela placa informada", responses = {
+            @ApiResponse(responseCode = "200", description = "Entidade Removida", content = @Content(mediaType = "application/json"))})
+    public ResponseEntity<CarroDTO> remover(@RequestBody @PathVariable(name = "placa")String placa){
         Carro carroExcluido = this.service.excluir(placa);
-        return mapper.toCarroDTO(carroExcluido);
+        return ResponseEntity.ok(mapper.toCarroDTO(carroExcluido));
     }
 
     @GetMapping(path = "/{placa}")
@@ -61,10 +76,11 @@ public class  CarroController {
         return this.mapper.toCarroDTO(carro);
     }
 
-    @PatchMapping(path = "/{placa}/alugar-carro")
-    @Operation(description = "Método para mudar o status do carro para alugado")
-    public CarroDTO alugar(@PathVariable(name = "placa")String placa){
+    @PatchMapping(path = "/{placa}/alugar-carro", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(description = "Método utilizado para alugar um carro", responses = {
+            @ApiResponse(responseCode = "200", description = "carro alugado", content = @Content(mediaType = "application/json", schema = @Schema(type = "array", anyOf = CarroDTO.class)))})
+    public ResponseEntity<CarroDTO> alugar(@PathVariable(name = "placa")String placa){
         Carro carro = this.service.alugar(placa);
-        return this.mapper.toCarroDTO(carro);
+        return ResponseEntity.ok(this.mapper.toCarroDTO(carro));
     }
 }
