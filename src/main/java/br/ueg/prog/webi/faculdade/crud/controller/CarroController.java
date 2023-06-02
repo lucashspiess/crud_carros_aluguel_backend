@@ -70,7 +70,14 @@ public class  CarroController {
     }
 
     @GetMapping(path = "/{placa}")
-    @Operation(description = "Método para retornar um carro pela placa")
+    @Operation(description = "Método para retornar um carro pela placa", responses = {
+            @ApiResponse(responseCode = "200", description = "retornar um carro pela placa",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(type = "array", anyOf = CarroDTO.class))),
+            @ApiResponse(responseCode = "404", description = "Registro náo encontrado",
+                    content = @Content(mediaType = "application/json"))
+    })
     public CarroDTO obterPorPlaca(@PathVariable(name = "placa")String placa){
         Carro carro = this.service.obterCarroPelaPlaca(placa);
         return this.mapper.toCarroDTO(carro);
@@ -81,6 +88,14 @@ public class  CarroController {
             @ApiResponse(responseCode = "200", description = "carro alugado", content = @Content(mediaType = "application/json", schema = @Schema(type = "array", anyOf = CarroDTO.class)))})
     public ResponseEntity<CarroDTO> alugar(@PathVariable(name = "placa")String placa){
         Carro carro = this.service.alugar(placa);
+        return ResponseEntity.ok(this.mapper.toCarroDTO(carro));
+    }
+
+    @PatchMapping(path = "/{placa}/desalugar-carro", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(description = "Método utilizado para desalugar um carro", responses = {
+            @ApiResponse(responseCode = "200", description = "carro devolvido", content = @Content(mediaType = "application/json", schema = @Schema(type = "array", anyOf = CarroDTO.class)))})
+    public ResponseEntity<CarroDTO> desalugar(@PathVariable(name = "placa")String placa){
+        Carro carro = this.service.desalugar(placa);
         return ResponseEntity.ok(this.mapper.toCarroDTO(carro));
     }
 }

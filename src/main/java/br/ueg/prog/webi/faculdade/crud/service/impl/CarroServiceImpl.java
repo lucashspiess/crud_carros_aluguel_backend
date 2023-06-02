@@ -136,4 +136,11 @@ public class CarroServiceImpl implements CarroService {
         Carro save = this.carroRepository.save(carro);
         return save;
     }
+    @Override
+    public Carro desalugar(String placa){
+        Carro carro = this.recuperarCarroOuGeraErro(placa);
+        carro.setStatus("Disponível");
+        Carro save = this.carroRepository.save(carro);
+        return save;
+    }
 }
