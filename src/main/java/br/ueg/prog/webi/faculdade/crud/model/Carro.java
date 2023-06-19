@@ -26,6 +26,9 @@ public class Carro {
     @Column(length = 30, nullable = false)
     private String cor;
 
+    @Column(nullable = false)
+    private Double diaria;
+
     @Column(length = 30)
     private String status;
 

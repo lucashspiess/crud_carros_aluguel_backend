@@ -13,7 +13,6 @@ public interface CarroMapper {
     public CarroListaDTO toDTO(Carro carro);
 
     public List<CarroListaDTO> toDTO(List<Carro> carros);
-    public CarroIncluirDTO toCarroIncluirDTO(Carro carro);
 
     public Carro toModel(CarroIncluirDTO carro);
 

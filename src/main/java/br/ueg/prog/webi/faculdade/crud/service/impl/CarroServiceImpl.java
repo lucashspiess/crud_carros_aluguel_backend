@@ -3,7 +3,6 @@ package br.ueg.prog.webi.faculdade.crud.service.impl;
 import br.ueg.prog.webi.faculdade.crud.model.Carro;
 import br.ueg.prog.webi.faculdade.crud.repository.CarroRepository;
 import br.ueg.prog.webi.faculdade.crud.service.CarroService;
-import br.ueg.prog.webi.faculdade.crud.utils.ValidacoesComuns;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,8 +21,7 @@ public class CarroServiceImpl implements CarroService {
     @Override
     public Carro incluir(Carro carro) {
         this.validarCamposObrigatorios(carro);
-
-       //this.validarDados(carro);
+        this.validaPlacaExistente(carro);
         this.prepararParaIncluir(carro);
         Carro carroIncluido = this.gravarDados(carro);
         return carroIncluido;
@@ -37,12 +35,6 @@ public class CarroServiceImpl implements CarroService {
         return carroRepository.save(carro);
     }
 
-    private void validarDados(Carro carro) {
-        if(!ValidacoesComuns.validarPlaca(carro.getPlaca())){
-            throw new IllegalArgumentException("Placa inválida");
-        }
-        validaPlacaExistente(carro);
-    }
 
     private void validaPlacaExistente(Carro carro) {
         Optional<Carro> carroDaPlaca =carroRepository.findByPlaca(carro.getPlaca());

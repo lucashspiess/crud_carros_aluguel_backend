@@ -9,4 +9,5 @@ public @Data class CarroIncluirDTO {
     private Long quilometragem;
     private Integer ano;
     private String cor;
+    private double diaria;
 }

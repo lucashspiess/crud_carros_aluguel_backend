@@ -37,7 +37,7 @@ public class  CarroController {
             @ApiResponse(responseCode = "404", description = "Registro náo encontrado",
                     content = @Content(mediaType = "application/json"))
     })
-    public List<CarroListaDTO> listAll(){
+    public List<CarroListaDTO> listAll_carro(){
         List<Carro> carros = service.listarTodos();
         System.out.print(carros);
         return mapper.toDTO(carros);
@@ -45,7 +45,7 @@ public class  CarroController {
 
     @PostMapping
     @Operation(description = "Inclusão de carro")
-    public Carro incluir(@RequestBody CarroIncluirDTO carro){
+    public Carro incluir_carro(@RequestBody CarroIncluirDTO carro){
         Carro carroIncluir = this.mapper.toModel(carro);
 
         carroIncluir = this.service.incluir(carroIncluir);
@@ -55,7 +55,7 @@ public class  CarroController {
 
     @PutMapping(path = "/{placa}")
     @Operation(description = "Método utilizado para alterar os dados de um carro")
-    public CarroDTO alterar(@RequestBody CarroIncluirDTO carro, @PathVariable(name = "placa") String placa){
+    public CarroDTO alterar_carro(@RequestBody CarroIncluirDTO carro, @PathVariable(name = "placa") String placa){
         Carro pCarro = mapper.toModel(carro);
         Carro alterar = service.alterar(pCarro, placa);
         return mapper.toCarroDTO(alterar);
@@ -64,7 +64,7 @@ public class  CarroController {
     @DeleteMapping(path = "/{placa}")
     @Operation(description = "Método utilizado para remover uma entidiade pela placa informada", responses = {
             @ApiResponse(responseCode = "200", description = "Entidade Removida", content = @Content(mediaType = "application/json"))})
-    public ResponseEntity<CarroDTO> remover(@RequestBody @PathVariable(name = "placa")String placa){
+    public ResponseEntity<CarroDTO> remover_carro(@RequestBody @PathVariable(name = "placa")String placa){
         Carro carroExcluido = this.service.excluir(placa);
         return ResponseEntity.ok(mapper.toCarroDTO(carroExcluido));
     }

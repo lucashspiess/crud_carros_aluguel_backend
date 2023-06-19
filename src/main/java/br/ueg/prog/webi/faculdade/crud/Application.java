@@ -26,6 +26,7 @@ public class Application {
 			carro.setModelo("nivus");
 			carro.setQuilometragem(0l);
 			carro.setStatus("Disponível");
+			carro.setDiaria(50.50);
 			carro = carroRepository.save(carro);
 			Optional<Carro>c1 = carroRepository.findByModelo(carro.getModelo());
 			System.out.println("carro1: "+ c1);

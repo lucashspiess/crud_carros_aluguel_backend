@@ -9,4 +9,5 @@ public @Data class CarroListaDTO {
     private Integer ano;
     private String cor;
     private String status;
+    private double diaria;
 }
