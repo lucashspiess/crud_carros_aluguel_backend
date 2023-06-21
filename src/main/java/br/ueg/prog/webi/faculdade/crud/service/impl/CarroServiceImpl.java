@@ -23,6 +23,7 @@ public class CarroServiceImpl implements CarroService {
         this.validarCamposObrigatorios(carro);
         this.validaPlacaExistente(carro);
         this.prepararParaIncluir(carro);
+        carro.setPlaca(carro.getPlaca().toUpperCase());
         Carro carroIncluido = this.gravarDados(carro);
         return carroIncluido;
     }

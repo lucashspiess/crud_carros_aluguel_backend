@@ -20,7 +20,7 @@ public class Application {
 		return args -> {
 			System.out.println("Teste");
 			Carro carro = new Carro();
-			carro.setPlaca("abc1234");
+			carro.setPlaca("ABC1234");
 			carro.setAno(2020);
 			carro.setCor("preto");
 			carro.setModelo("nivus");
