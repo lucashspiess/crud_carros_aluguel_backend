@@ -19,8 +19,9 @@ public class AluguelServiceImpl implements AluguelService {
     private AluguelRepository aluguelRepository;
 
     @Override
-    public Aluguel incluir(String placa, Aluguel aluguel) {
+    public Aluguel incluir(String placa, Aluguel aluguel, Cliente cliente) {
         aluguel.setPlaca(placa);
+        aluguel.setCliente(cliente);
         aluguel.setValor(this.calcularValorTotal(aluguel, placa));
         carroService.alugar(placa);
         return this.gravarDados(aluguel);

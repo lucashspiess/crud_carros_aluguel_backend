@@ -18,18 +18,16 @@ public class Application {
 	@Bean
 	public CommandLineRunner commandLineRunner(CarroRepository carroRepository){
 		return args -> {
-			System.out.println("Teste");
 			Carro carro = new Carro();
 			carro.setPlaca("ABC1234");
 			carro.setAno(2020);
-			carro.setCor("preto");
-			carro.setModelo("nivus");
+			carro.setCor("Preto");
+			carro.setModelo("Nivus");
 			carro.setQuilometragem(0l);
 			carro.setStatus("Disponível");
 			carro.setDiaria(50.50);
 			carro = carroRepository.save(carro);
 			Optional<Carro>c1 = carroRepository.findByModelo(carro.getModelo());
-			System.out.println("carro1: "+ c1);
 		};
 	}
 }

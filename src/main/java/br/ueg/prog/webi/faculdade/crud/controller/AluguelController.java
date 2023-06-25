@@ -5,7 +5,9 @@ import br.ueg.prog.webi.faculdade.crud.dto.CarroDTO;
 import br.ueg.prog.webi.faculdade.crud.mapper.AluguelMapper;
 import br.ueg.prog.webi.faculdade.crud.model.Aluguel;
 import br.ueg.prog.webi.faculdade.crud.model.Carro;
+import br.ueg.prog.webi.faculdade.crud.model.Cliente;
 import br.ueg.prog.webi.faculdade.crud.service.AluguelService;
+import br.ueg.prog.webi.faculdade.crud.service.ClienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -26,6 +28,8 @@ public class AluguelController {
 
     @Autowired
     private AluguelService service;
+    @Autowired
+    private ClienteService clienteService;
 
     @GetMapping(path = "/listar")
     @Operation(description = "Listagem Geral", responses = {
@@ -42,7 +46,7 @@ public class AluguelController {
         return mapper.toDTO(alugueis);
     }
 
-    @PostMapping(path = "/{placa}")
+    @PostMapping(path = "/{placa}/{cpf}")
     @Operation(description = "Inclusão de aluguel", responses = {
             @ApiResponse(responseCode = "200", description = "inclui um aluguel",
                     content = @Content(
@@ -51,9 +55,9 @@ public class AluguelController {
             @ApiResponse(responseCode = "404", description = "Registro náo encontrado",
                     content = @Content(mediaType = "application/json"))
     })
-    public Aluguel incluir_aluguel(@RequestBody AluguelDTO aluguel, @PathVariable(name = "placa")String placa) {
+    public Aluguel incluir_aluguel(@RequestBody AluguelDTO aluguel, @PathVariable(name = "placa")String placa, @PathVariable(name = "cpf") Long cpf) {
         Aluguel aluguelIncluir = this.mapper.toModel(aluguel);
-        aluguelIncluir = this.service.incluir(placa, aluguelIncluir);
+        aluguelIncluir = this.service.incluir(placa, aluguelIncluir, clienteService.obterPeloCpf(cpf));
 
         return aluguelIncluir;
     }
