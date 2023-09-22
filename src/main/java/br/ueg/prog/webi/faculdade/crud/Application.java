@@ -1,33 +1,26 @@
 package br.ueg.prog.webi.faculdade.crud;
 
-import br.ueg.prog.webi.faculdade.crud.model.Carro;
-import br.ueg.prog.webi.faculdade.crud.repository.CarroRepository;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import java.util.*;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
-@SpringBootApplication
+import java.util.*;
+@SpringBootApplication(scanBasePackages = {
+		"br.ueg.prog.webi.faculdade",
+		"br.ueg.prog.webi.*" //Para funcionamento da Arquitetura
+})
+@EntityScan(basePackageClasses = {Jsr310JpaConverters.class},
+		basePackages = {
+				"br.ueg.prog.webi.faculdade",
+				"br.ueg.prog.webi.api.*" //Para funcionamento da Arquitetura
+		})
+@EnableWebSecurity
 public class Application {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-	}
+		public static void main(String[] args) {
+			SpringApplication.run(Application.class, args);
+		}
 
-	@Bean
-	public CommandLineRunner commandLineRunner(CarroRepository carroRepository){
-		return args -> {
-			Carro carro = new Carro();
-			carro.setPlaca("ABC1234");
-			carro.setAno(2020);
-			carro.setCor("Preto");
-			carro.setModelo("Nivus");
-			carro.setQuilometragem(0l);
-			carro.setStatus("Disponível");
-			carro.setDiaria(50.50);
-			carro = carroRepository.save(carro);
-			Optional<Carro>c1 = carroRepository.findByModelo(carro.getModelo());
-		};
-	}
 }

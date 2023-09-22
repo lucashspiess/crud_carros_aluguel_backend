@@ -9,10 +9,8 @@
 package br.ueg.prog.webi.faculdade.crud.configuration;
 
 import br.ueg.prog.webi.api.config.ApiWebConfig;
-import br.ueg.prog.webi.api.config.ApiWebConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
-import org.springframework.web.filter.CorsFilter;
 
 /**
  * Classe de configuração referente aos recursos Web MVC da aplicação.
@@ -32,9 +30,4 @@ public class WebConfig extends ApiWebConfig {
 		return new MethodValidationPostProcessor();
 	}*/
 
-	@Override
-	public CorsFilter corsFilter() {
-		CorsFilter corsFilter = super.corsFilter();
-		return corsFilter;
-	}
 }
