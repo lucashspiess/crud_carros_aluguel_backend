@@ -1,20 +1,21 @@
 package br.ueg.prog.webi.faculdade.crud.mapper;
 
+import br.ueg.prog.webi.api.mapper.BaseMapper;
 import br.ueg.prog.webi.faculdade.crud.dto.CarroDTO;
-import br.ueg.prog.webi.faculdade.crud.dto.CarroIncluirDTO;
-import br.ueg.prog.webi.faculdade.crud.dto.CarroListaDTO;
 import br.ueg.prog.webi.faculdade.crud.model.Carro;
 import org.mapstruct.Mapper;
-
-import java.util.List;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface CarroMapper {
-    public CarroListaDTO toDTO(Carro carro);
+public interface CarroMapper extends BaseMapper<Carro, CarroDTO> {
 
-    public List<CarroListaDTO> toDTO(List<Carro> carros);
+    @Override
+    @Mapping(source = "tipo_nome", target = "tipo.nome")
+    @Mapping(source = "tipo_id", target = "tipo.id")
+    Carro toModelo(CarroDTO carro);
 
-    public Carro toModel(CarroIncluirDTO carro);
-
-    public CarroDTO toCarroDTO(Carro carro);
+    @Override
+    @Mapping(source = "tipo.nome", target = "tipo_nome")
+    @Mapping(source = "tipo.id", target = "tipo_id")
+    CarroDTO toDTO(Carro carro);
 }

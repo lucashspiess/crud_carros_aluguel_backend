@@ -1,11 +1,8 @@
 package br.ueg.prog.webi.faculdade.crud.controller;
 
 import br.ueg.prog.webi.faculdade.crud.dto.AluguelDTO;
-import br.ueg.prog.webi.faculdade.crud.dto.CarroDTO;
 import br.ueg.prog.webi.faculdade.crud.mapper.AluguelMapper;
 import br.ueg.prog.webi.faculdade.crud.model.Aluguel;
-import br.ueg.prog.webi.faculdade.crud.model.Carro;
-import br.ueg.prog.webi.faculdade.crud.model.Cliente;
 import br.ueg.prog.webi.faculdade.crud.service.AluguelService;
 import br.ueg.prog.webi.faculdade.crud.service.ClienteService;
 import io.swagger.v3.oas.annotations.Operation;
