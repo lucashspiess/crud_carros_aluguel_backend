@@ -29,14 +29,17 @@ public class Aluguel {
             foreignKey = @ForeignKey(name = "fk_aluguel_cliente"))
     private Cliente cliente;
 
-    @Column(name = "placa",length = 8, nullable = false)
-    private String placa;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "carro_placa", nullable = false,
+            referencedColumnName = "placa",
+            foreignKey = @ForeignKey(name = "fk_aluguel_carro"))
+    private Carro carro;
 
     @Column(name="data_inicio",nullable = false)
-    private Date data_inicio;
+    private String data_inicio;
 
     @Column(name="data_fim",nullable = false)
-    private Date data_fim;
+    private String data_fim;
 
     @Column(name="valor", nullable = false)
     private Double valor;

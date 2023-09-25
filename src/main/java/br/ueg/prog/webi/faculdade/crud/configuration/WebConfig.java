@@ -10,6 +10,9 @@ package br.ueg.prog.webi.faculdade.crud.configuration;
 
 import br.ueg.prog.webi.api.config.ApiWebConfig;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 /**
@@ -18,6 +21,9 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
  * @author UEG
  */
 @Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
+
 public class WebConfig extends ApiWebConfig {
 
 	/**
