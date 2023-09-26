@@ -38,6 +38,9 @@ public class Carro {
     @Column(nullable = false)
     private Double diaria;
 
+    @Column(nullable = false)
+    private String marca;
+
     @Column(length = 30)
     private String status;
 

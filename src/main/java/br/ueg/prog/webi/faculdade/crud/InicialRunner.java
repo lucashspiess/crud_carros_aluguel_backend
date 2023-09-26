@@ -40,6 +40,7 @@ public class InicialRunner implements ApplicationRunner {
 
         Carro carro = Carro.builder()
                 .ano(2020)
+                .marca("Volkswagen")
                 .cor("Preto")
                 .diaria(50.50)
                 .modelo("Nivus")
