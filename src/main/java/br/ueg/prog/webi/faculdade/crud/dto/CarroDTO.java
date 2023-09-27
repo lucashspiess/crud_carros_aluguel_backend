@@ -12,5 +12,5 @@ public @Data class CarroDTO {
     private Integer ano;
     private String cor;
     private String status;
-    private double diaria;
+    private Double diaria;
 }
