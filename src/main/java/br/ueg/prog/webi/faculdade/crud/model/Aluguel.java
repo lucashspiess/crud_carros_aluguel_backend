@@ -2,7 +2,6 @@ package br.ueg.prog.webi.faculdade.crud.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import java.util.Date;
 
 import static jakarta.persistence.GenerationType.SEQUENCE;
 

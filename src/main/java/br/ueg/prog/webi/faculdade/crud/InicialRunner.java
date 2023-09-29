@@ -4,7 +4,9 @@ import br.ueg.prog.webi.faculdade.crud.model.Carro;
 import br.ueg.prog.webi.faculdade.crud.model.Tipo;
 import br.ueg.prog.webi.faculdade.crud.model.Usuario;
 import br.ueg.prog.webi.faculdade.crud.repository.CarroRepository;
+import br.ueg.prog.webi.faculdade.crud.repository.TipoRepository;
 import br.ueg.prog.webi.faculdade.crud.repository.UsuarioRepository;
+import br.ueg.prog.webi.faculdade.crud.service.impl.CarroServiceImpl;
 import br.ueg.prog.webi.faculdade.crud.service.impl.TipoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -18,7 +20,7 @@ import java.util.Locale;
 public class InicialRunner implements ApplicationRunner {
 
     @Autowired
-    private CarroRepository carroRepository;
+    private CarroServiceImpl carroService;
 
     @Autowired
     private TipoServiceImpl tipoService;
@@ -36,7 +38,7 @@ public class InicialRunner implements ApplicationRunner {
                 .descricao("Grande")
                 .build();
 
-        tipoService.incluir(tipo);
+        tipo = this.tipoService.incluir(tipo);
 
         Carro carro = Carro.builder()
                 .ano(2020)
@@ -50,7 +52,7 @@ public class InicialRunner implements ApplicationRunner {
                 .status("Disponível")
                 .build();
 
-        carro = carroRepository.save(carro);
+        carro = this.carroService.incluir(carro);
 
         Usuario user = new Usuario();
         user.setNome("Ademir");
