@@ -38,6 +38,12 @@ public class Carro implements IEntidade {
     @Column(length = 30, nullable = false)
     private String cor;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "imagem_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "fk_carro_imagem"))
+    private Imagem imagem;
+
     @Column(nullable = false)
     private Double diaria;
 
@@ -54,7 +60,7 @@ public class Carro implements IEntidade {
 
     @Override
     public Object getId() {
-        return null;
+        return this.placa;
     }
 
     @Override
@@ -74,7 +80,7 @@ public class Carro implements IEntidade {
 
     @Override
     public void setId(Object id) {
-
+        this.placa = id.toString();
     }
 
     @Override
