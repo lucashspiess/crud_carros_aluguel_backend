@@ -52,4 +52,7 @@ public class ImagemController {
         return this.service.obterPeloId(requestID).getPathReference();
     }
 
+
+    @DeleteMapping
+    public boolean excluirFoto(String path){return this.service.excluirFoto(path);}
 }

@@ -42,4 +42,7 @@ public class Imagem extends BaseEntidade<Long> {
 
     @Column(name = "path")
     private String pathReference;
+
+    @Column(name = "caminho_front")
+    private String caminhoFront;
 }

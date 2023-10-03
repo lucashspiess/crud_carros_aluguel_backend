@@ -4,10 +4,9 @@ import br.ueg.prog.webi.faculdade.crud.model.Carro;
 import br.ueg.prog.webi.faculdade.crud.model.Imagem;
 import br.ueg.prog.webi.faculdade.crud.model.Tipo;
 import br.ueg.prog.webi.faculdade.crud.model.Usuario;
-import br.ueg.prog.webi.faculdade.crud.repository.CarroRepository;
-import br.ueg.prog.webi.faculdade.crud.repository.TipoRepository;
 import br.ueg.prog.webi.faculdade.crud.repository.UsuarioRepository;
 import br.ueg.prog.webi.faculdade.crud.service.impl.CarroServiceImpl;
+import br.ueg.prog.webi.faculdade.crud.service.impl.DiretorioServiceImpl;
 import br.ueg.prog.webi.faculdade.crud.service.impl.ImagemServiceImpl;
 import br.ueg.prog.webi.faculdade.crud.service.impl.TipoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +14,12 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.Locale;
 
 
 @Component
-public class InicialRunner implements ApplicationRunner {
+public class InicialRunner extends Thread implements ApplicationRunner {
 
     @Autowired
     private CarroServiceImpl carroService;
@@ -33,10 +33,19 @@ public class InicialRunner implements ApplicationRunner {
     @Autowired
     private ImagemServiceImpl imagemService;
 
+    @Autowired
+    private DiretorioServiceImpl diretorioService;
 
-    public void initDados(){
+    private final String ORIGEM = "C:\\Portable20231\\workspace\\prog.webi.faculdade.crud\\src\\carros-fotos";
+
+    private final String DESTINO = "C:\\Portable20231\\workspace\\ueg-prog-webi-faculdade\\src\\carros";
+
+
+    public void initDados() throws IOException {
 
         Locale.setDefault(new Locale("pt-br"));
+
+        diretorioService.copiaDiretorio(ORIGEM, DESTINO);
 
         Tipo tipo = Tipo.builder()
                 .nome("SUV")
@@ -46,8 +55,9 @@ public class InicialRunner implements ApplicationRunner {
         tipo = this.tipoService.incluir(tipo);
 
         Imagem imagem = Imagem.builder()
-                .pathReference("assets/volkswagen_nivus.jpg")
-                .caminhoArq("C:\\Portable20231\\workspace\\ueg-prog-webi-faculdade\\src\\assets\\volkswagen_nivus.jpg")
+                .pathReference("carros/volkswagen_nivus.jpg")
+                .caminhoArq(ORIGEM + "\\volkswagen_nivus.jpg")
+                .caminhoFront(DESTINO + "\\volkswagen_nivus.jpg")
                 .tipo("imagem/jpeg")
                 .nome("volkswagen_nivus.jpg")
                 .build();
@@ -77,8 +87,9 @@ public class InicialRunner implements ApplicationRunner {
         tipo = this.tipoService.incluir(tipo);
 
         imagem = Imagem.builder()
-                .pathReference("assets/bmw_x6.jpg")
-                .caminhoArq("C:\\Portable20231\\workspace\\ueg-prog-webi-faculdade\\src\\assets\\bmw_x6.jpg")
+                .pathReference("carros/bmw_x6.jpg")
+                .caminhoArq(ORIGEM + "\\bmw_x6.jpg")
+                .caminhoFront(DESTINO + "\\bmw_x6.jpg")
                 .tipo("imagem/jpeg")
                 .nome("bmw_x6.jpg")
                 .build();
@@ -108,8 +119,9 @@ public class InicialRunner implements ApplicationRunner {
         tipo = this.tipoService.incluir(tipo);
 
         imagem = Imagem.builder()
-                .pathReference("assets/audi_r8.jpg")
-                .caminhoArq("C:\\Portable20231\\workspace\\ueg-prog-webi-faculdade\\src\\assets\\audi_r8.jpg")
+                .pathReference("carros/audi_r8.jpg")
+                .caminhoArq(ORIGEM + "\\audi_r8.jpg")
+                .caminhoFront(DESTINO + "\\audi_r8.jpg")
                 .tipo("imagem/jpeg")
                 .nome("audi_r8.jpg")
                 .build();
@@ -121,7 +133,7 @@ public class InicialRunner implements ApplicationRunner {
                 .marca("Audi")
                 .cor("Preto")
                 .diaria(546.73)
-                .modelo("r8")
+                .modelo("R8")
                 .imagem(imagem)
                 .placa("GLK9865")
                 .tipo(tipo)
@@ -143,15 +155,14 @@ public class InicialRunner implements ApplicationRunner {
 
         user = usuarioRepository.save(user);
     }
+
     @Override
-    public void run(ApplicationArguments args) throws Exception {
-
+    public void run(ApplicationArguments args) {
         try {
-            this.initDados();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            initDados();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> this.diretorioService.excluirDiretorio("C:\\Portable20231\\workspace\\ueg-prog-webi-faculdade\\src\\carros")));
     }
 }
