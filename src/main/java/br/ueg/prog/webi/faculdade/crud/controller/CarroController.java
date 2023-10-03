@@ -41,6 +41,36 @@ public class  CarroController {
         return mapper.toDTO(carros);
     }
 
+    @GetMapping(path="/listarDisponiveis")
+    @Operation(description = "Listagem Geral", responses = {
+            @ApiResponse(responseCode = "200", description = "Listagem geral",
+                    content = @Content(
+                            mediaType = "application/json",
+                            array = @ArraySchema())),
+            @ApiResponse(responseCode = "404", description = "Registro náo encontrado",
+                    content = @Content(mediaType = "application/json"))
+    })
+    public List<CarroDTO> listarDisponiveis(){
+        List<Carro> carros = service.listarDisponiveis();
+        System.out.print(carros);
+        return mapper.toDTO(carros);
+    }
+
+    @GetMapping(path="/listarAlugados")
+    @Operation(description = "Listagem Geral", responses = {
+            @ApiResponse(responseCode = "200", description = "Listagem geral",
+                    content = @Content(
+                            mediaType = "application/json",
+                            array = @ArraySchema())),
+            @ApiResponse(responseCode = "404", description = "Registro náo encontrado",
+                    content = @Content(mediaType = "application/json"))
+    })
+    public List<CarroDTO> listarAlugados(){
+        List<Carro> carros = service.listarAlugados();
+        System.out.print(carros);
+        return mapper.toDTO(carros);
+    }
+
     @PostMapping
     @Operation(description = "Inclusão de carro")
     public Carro incluir_carro(@RequestBody CarroDTO carro){

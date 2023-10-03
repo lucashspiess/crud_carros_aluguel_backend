@@ -136,4 +136,14 @@ public class CarroServiceImpl implements CarroService {
         Carro save = this.carroRepository.save(carro);
         return save;
     }
+
+    @Override
+    public List<Carro> listarDisponiveis() {
+        return this.carroRepository.findByStatus("Disponível").orElseThrow();
+    }
+
+    @Override
+    public List<Carro> listarAlugados() {
+        return this.carroRepository.findByStatus("Alugado").orElseThrow();
+    }
 }

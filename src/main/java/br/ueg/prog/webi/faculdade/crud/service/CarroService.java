@@ -12,4 +12,8 @@ public interface CarroService {
     public List<Carro> listarTodos();
     public Carro alugar(String placa);
     public Carro desalugar(String placa);
+
+    public List<Carro> listarDisponiveis();
+
+    public List<Carro> listarAlugados();
 }
