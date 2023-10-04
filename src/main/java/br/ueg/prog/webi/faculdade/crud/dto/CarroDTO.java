@@ -17,12 +17,6 @@ public @Data class CarroDTO {
 
     private Long imagem_id;
 
-    private String imagem_path;
-
-    private String imagem_caminhoArq;
-
-    private String imagem_caminhoFront;
-
     private Integer ano;
 
     private String cor;

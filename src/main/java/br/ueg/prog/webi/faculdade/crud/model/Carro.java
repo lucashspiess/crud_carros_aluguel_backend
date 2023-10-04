@@ -1,5 +1,6 @@
 package br.ueg.prog.webi.faculdade.crud.model;
 
+import br.ueg.prog.webi.api.model.BaseEntidade;
 import br.ueg.prog.webi.api.model.IEntidade;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Entity
 @Table(name = "TBL_CARRO")
-public class Carro implements IEntidade {
+public class Carro extends BaseEntidade<String> {
     @Id
     @Column(length = 8)
     private String placa;
@@ -38,11 +39,9 @@ public class Carro implements IEntidade {
     @Column(length = 30, nullable = false)
     private String cor;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "imagem_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "fk_carro_imagem"))
-    private Imagem imagem;
+
+    @Column(name = "imagem_id", nullable = false)
+    private long imagem_id;
 
     @Column(nullable = false)
     private Double diaria;
@@ -53,48 +52,4 @@ public class Carro implements IEntidade {
     @Column(length = 30)
     private String status;
 
-    @Override
-    public String getTabelaNome() {
-        return null;
-    }
-
-    @Override
-    public Object getId() {
-        return this.placa;
-    }
-
-    @Override
-    public boolean isNew() {
-        return false;
-    }
-
-    @Override
-    public String getIdHash() {
-        return null;
-    }
-
-    @Override
-    public Object getIdFromHash(String hash) {
-        return null;
-    }
-
-    @Override
-    public void setId(Object id) {
-        this.placa = id.toString();
-    }
-
-    @Override
-    public void setNew() {
-
-    }
-
-    @Override
-    public Map<String, IEntidade<?>> getForeignEntitiesMaps() {
-        return null;
-    }
-
-    @Override
-    public void setForeignEntitiesMaps(Map foreignEntities) {
-
-    }
 }

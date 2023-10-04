@@ -1,9 +1,7 @@
 package br.ueg.prog.webi.faculdade.crud.controller;
 
-import br.ueg.prog.webi.faculdade.crud.dto.AluguelDTO;
 import br.ueg.prog.webi.faculdade.crud.dto.ClienteDTO;
 import br.ueg.prog.webi.faculdade.crud.mapper.ClienteMapper;
-import br.ueg.prog.webi.faculdade.crud.model.Aluguel;
 import br.ueg.prog.webi.faculdade.crud.model.Cliente;
 import br.ueg.prog.webi.faculdade.crud.service.ClienteService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,7 +10,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

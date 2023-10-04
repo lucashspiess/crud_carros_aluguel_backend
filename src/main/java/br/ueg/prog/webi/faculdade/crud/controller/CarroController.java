@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -116,13 +118,14 @@ public class  CarroController {
             @ApiResponse(responseCode = "200", description = "carro alugado", content = @Content(mediaType = "application/json", schema = @Schema(type = "array", anyOf = CarroDTO.class)))})
     public ResponseEntity<CarroDTO> alugar(@PathVariable(name = "placa")String placa){
         Carro carro = this.service.alugar(placa);
+        System.out.println(ResponseEntity.ok(this.mapper.toDTO(carro)));
         return ResponseEntity.ok(this.mapper.toDTO(carro));
     }
 
     @PatchMapping(path = "/{placa}/desalugar-carro", produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(description = "Método utilizado para desalugar um carro", responses = {
             @ApiResponse(responseCode = "200", description = "carro devolvido", content = @Content(mediaType = "application/json", schema = @Schema(type = "array", anyOf = CarroDTO.class)))})
-    public ResponseEntity<CarroDTO> desalugar(@PathVariable(name = "placa")String placa){
+    public ResponseEntity<CarroDTO> desalugar(@PathVariable(name = "placa")String placa) {
         Carro carro = this.service.desalugar(placa);
         return ResponseEntity.ok(this.mapper.toDTO(carro));
     }

@@ -5,6 +5,7 @@ import br.ueg.prog.webi.faculdade.crud.model.Imagem;
 import br.ueg.prog.webi.faculdade.crud.model.Tipo;
 import br.ueg.prog.webi.faculdade.crud.model.Usuario;
 import br.ueg.prog.webi.faculdade.crud.repository.UsuarioRepository;
+import br.ueg.prog.webi.faculdade.crud.service.ImagemService;
 import br.ueg.prog.webi.faculdade.crud.service.impl.CarroServiceImpl;
 import br.ueg.prog.webi.faculdade.crud.service.impl.DiretorioServiceImpl;
 import br.ueg.prog.webi.faculdade.crud.service.impl.ImagemServiceImpl;
@@ -13,8 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Locale;
 
 
@@ -33,19 +38,13 @@ public class InicialRunner extends Thread implements ApplicationRunner {
     @Autowired
     private ImagemServiceImpl imagemService;
 
-    @Autowired
-    private DiretorioServiceImpl diretorioService;
-
+    //mudar de acordo com a pasta utilizada para salvar as fotos
     private final String ORIGEM = "C:\\Portable20231\\workspace\\prog.webi.faculdade.crud\\src\\carros-fotos";
-
-    private final String DESTINO = "C:\\Portable20231\\workspace\\ueg-prog-webi-faculdade\\src\\carros";
 
 
     public void initDados() throws IOException {
 
         Locale.setDefault(new Locale("pt-br"));
-
-        diretorioService.copiaDiretorio(ORIGEM, DESTINO);
 
         Tipo tipo = Tipo.builder()
                 .nome("SUV")
@@ -54,15 +53,12 @@ public class InicialRunner extends Thread implements ApplicationRunner {
 
         tipo = this.tipoService.incluir(tipo);
 
-        Imagem imagem = Imagem.builder()
-                .pathReference("carros/volkswagen_nivus.jpg")
-                .caminhoArq(ORIGEM + "\\volkswagen_nivus.jpg")
-                .caminhoFront(DESTINO + "\\volkswagen_nivus.jpg")
-                .tipo("imagem/jpeg")
-                .nome("volkswagen_nivus.jpg")
-                .build();
+        byte[] bytes = Files.readAllBytes(Paths.get(ORIGEM + "\\volkswagen_nivus.jpg"));
 
-        imagem = this.imagemService.incluir(imagem);
+        Imagem imagem = Imagem.builder()
+                .img(bytes)
+                .build();
+        imagem =  this.imagemService.incluir(imagem);
 
         Carro carro = Carro.builder()
                 .ano(2020)
@@ -70,7 +66,7 @@ public class InicialRunner extends Thread implements ApplicationRunner {
                 .cor("Preto")
                 .diaria(50.50)
                 .modelo("Nivus")
-                .imagem(imagem)
+                .imagem_id(imagem.getId())
                 .placa("ABC1234")
                 .tipo(tipo)
                 .quilometragem(0l)
@@ -86,15 +82,12 @@ public class InicialRunner extends Thread implements ApplicationRunner {
 
         tipo = this.tipoService.incluir(tipo);
 
-        imagem = Imagem.builder()
-                .pathReference("carros/bmw_x6.jpg")
-                .caminhoArq(ORIGEM + "\\bmw_x6.jpg")
-                .caminhoFront(DESTINO + "\\bmw_x6.jpg")
-                .tipo("imagem/jpeg")
-                .nome("bmw_x6.jpg")
-                .build();
+        bytes = Files.readAllBytes(Paths.get(ORIGEM + "\\bmw_x6.jpg"));
 
-        imagem = this.imagemService.incluir(imagem);
+        imagem = Imagem.builder()
+                .img(bytes)
+                .build();
+        imagem =  this.imagemService.incluir(imagem);
 
         carro = Carro.builder()
                 .ano(2020)
@@ -102,7 +95,7 @@ public class InicialRunner extends Thread implements ApplicationRunner {
                 .cor("Preto")
                 .diaria(502.50)
                 .modelo("X6")
-                .imagem(imagem)
+                .imagem_id(imagem.getId())
                 .placa("DEF5432")
                 .tipo(tipo)
                 .quilometragem(231l)
@@ -118,15 +111,12 @@ public class InicialRunner extends Thread implements ApplicationRunner {
 
         tipo = this.tipoService.incluir(tipo);
 
-        imagem = Imagem.builder()
-                .pathReference("carros/audi_r8.jpg")
-                .caminhoArq(ORIGEM + "\\audi_r8.jpg")
-                .caminhoFront(DESTINO + "\\audi_r8.jpg")
-                .tipo("imagem/jpeg")
-                .nome("audi_r8.jpg")
-                .build();
+        bytes = Files.readAllBytes(Paths.get(ORIGEM + "\\audi_r8.jpg"));
 
-        imagem = this.imagemService.incluir(imagem);
+        imagem = Imagem.builder()
+                .img(bytes)
+                .build();
+        imagem =  this.imagemService.incluir(imagem);
 
         carro = Carro.builder()
                 .ano(2020)
@@ -134,7 +124,7 @@ public class InicialRunner extends Thread implements ApplicationRunner {
                 .cor("Preto")
                 .diaria(546.73)
                 .modelo("R8")
-                .imagem(imagem)
+                .imagem_id(imagem.getId())
                 .placa("GLK9865")
                 .tipo(tipo)
                 .quilometragem(10l)
@@ -163,6 +153,5 @@ public class InicialRunner extends Thread implements ApplicationRunner {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> this.diretorioService.excluirDiretorio("C:\\Portable20231\\workspace\\ueg-prog-webi-faculdade\\src\\carros")));
     }
 }

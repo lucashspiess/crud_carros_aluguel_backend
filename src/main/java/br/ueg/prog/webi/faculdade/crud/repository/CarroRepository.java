@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface CarroRepository extends JpaRepository <Carro, String> {
-    Optional<Carro> findByModelo(String modelo);
     Optional<Carro> findByPlaca(String placa);
 
     Optional<List<Carro>> findByStatus(String status);

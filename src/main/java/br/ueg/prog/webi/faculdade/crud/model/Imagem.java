@@ -31,18 +31,7 @@ public class Imagem extends BaseEntidade<Long> {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "nome")
-    private String nome;
-
-    @Column(name = "tipo")
-    private String tipo;
-
-    @Column(name = "caminho")
-    private String caminhoArq;
-
-    @Column(name = "path")
-    private String pathReference;
-
-    @Column(name = "caminho_front")
-    private String caminhoFront;
+    @Lob
+    @Column(name = "img_blob")
+    private byte[] img;
 }

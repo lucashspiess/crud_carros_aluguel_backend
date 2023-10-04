@@ -51,12 +51,15 @@ public class SecurityConfig extends ApiSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         List<String> freeAccessPaternsList = new ArrayList<>(
                 Arrays.asList(urlAuthController.concat("/**"),
+                        "/**",
                         "/v2/api-docs",
                         "/v3/api-docs",
                         "/v3/api-docs/**",
                         "/swagger-resources",
                         "/swagger-resources/**",
                         "/configuration/ui",
+                        "/imagem/**",
+                        "localhost:4200/imagem/**",
                         "/configuration/security",
                         "/swagger-ui/**",
                         "/webjars/**",

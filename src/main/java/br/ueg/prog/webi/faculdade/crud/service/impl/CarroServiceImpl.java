@@ -24,6 +24,7 @@ public class CarroServiceImpl implements CarroService {
         this.validaPlacaExistente(carro);
         this.prepararParaIncluir(carro);
         carro.setPlaca(carro.getPlaca().toUpperCase());
+        carro.setImagem_id(carro.getImagem_id());
         Carro carroIncluido = this.gravarDados(carro);
         return carroIncluido;
     }
@@ -64,6 +65,9 @@ public class CarroServiceImpl implements CarroService {
         if(Objects.isNull(carro.getAno())){
             camposVazios.add("Ano");
         }
+        if(Objects.isNull(carro.getImagem_id())){
+            camposVazios.add("Imagem id");
+        }
         if(!camposVazios.isEmpty()){
             throw new IllegalArgumentException(
                     "Campos obrigatórios não preenchidos ("+
@@ -75,11 +79,11 @@ public class CarroServiceImpl implements CarroService {
     @Override
     public Carro alterar(Carro carro, String placa) {
         this.validarCamposObrigatorios(carro);
-        //this.validarDados(carro);
 
         Carro carroBD = recuperarCarroOuGeraErro(placa);
 
         carro.setStatus(carroBD.getStatus());
+
 
         Carro save = carroRepository.save(carro);
 
